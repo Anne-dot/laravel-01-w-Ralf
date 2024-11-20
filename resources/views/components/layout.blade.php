@@ -21,7 +21,8 @@
                 <a href="/" class="text-xl font-bold">Library</a>
                 <div class="flex gap-4"> 
                     <x-nav.link route="authors.index">Authors</x-nav.link>
-                    <x-nav.link route="authors.create">Create</x-nav.link>
+                    <x-nav.link route="books.index">Books</x-nav.link>
+                    <x-nav.link route="clients.index">Clients</x-nav.link>
                 </div>
             </div>
         </div>

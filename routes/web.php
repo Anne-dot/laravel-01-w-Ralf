@@ -30,7 +30,9 @@ Route::resource('authors', AuthorController::class);
 
 Route::resource('books', BookController::class);
 
-Route::get('clients', [ClientController::class, 'index']);
+// Route::get('clients', [ClientController::class, 'index']);
+
+Route::resource('clients', ClientController::class);
 
 
 
