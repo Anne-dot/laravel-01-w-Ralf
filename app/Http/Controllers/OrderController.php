@@ -12,7 +12,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return Order::all();
+        return view('order.index', [
+            'order' => Order::paginate(10)
+        ]);
     }
 
     /**
@@ -36,7 +38,9 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        // $order = $order->load('client', 'book_authors');
+        $order = $order->load('client');
+        return response()->json($order);
     }
 
     /**

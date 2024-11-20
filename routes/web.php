@@ -19,10 +19,12 @@ Route::get('/trees', function(){
 });
 
 Route::get('orders', [OrderController::class, 'index']);
+Route::get('order.index', [OrderController::class, 'index']);
 
-Route::get('/orders/{order}', function(Order $order){
-    return $order->load('client', 'book.authors');
-});
+// Route::get('/orders/{order}', function(Order $order){
+//     return $order->load('client', 'book.authors');
+// });
+Route::get('/orders.{order}', [OrderController::class, 'show']);
 
 Route::resource('authors', AuthorController::class);
 
