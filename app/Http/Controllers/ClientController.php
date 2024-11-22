@@ -12,7 +12,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return Client::all();
+        // return Client::paginate(10);
+        return view('client.index', [
+            'clients' => Client::orderBy('last_name')->orderBy('first_name')->paginate(10)
+        ]);
     }
 
     /**
@@ -20,7 +23,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('client.create');
     }
 
     /**

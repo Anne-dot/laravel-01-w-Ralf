@@ -38,9 +38,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        // $order = $order->load('client', 'book_authors');
-        $order = $order->load('client');
-        return response()->json($order);
+        return $order = $order->load('client', 'book.authors');
     }
 
     /**

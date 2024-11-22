@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
@@ -10,26 +11,33 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //return Book::all();
-        // return Book::paginate(15);
 
+     public function index()
+    {
         return view('book.index', [
-            'books' => Book::paginate(15)
+            'books' => Book::paginate(5)
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
+ 
     public function create()
     {
+        // Fetch distinct types from the Book model
         $types = Book::select('type')->distinct()->get(); 
-    return view('book.create', compact('types')); 
 
-        // return view('book.create');
+        // $authors = Author::all();
+        $authors = Author::orderBy('last_name')->orderBy('first_name')->get();
+
+        // Return the 'book.create' view and pass the $types and $authors variables to it
+        return view('book.create', [
+            'types' => $types, 
+            'authors' => $authors
+        ]);
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -54,7 +62,9 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        return view('book.show', [
+            'book' => $book
+        ]);
     }
 
     /**

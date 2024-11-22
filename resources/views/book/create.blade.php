@@ -13,6 +13,20 @@
                 @enderror
             </div>
             <div>
+                <label for="author" class="block text-xs font-medium text-gray-700">Author</label>
+                <select id="author" name="author"
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm">
+                    <option value="" disabled selected>Select author</option>
+                    @foreach ($authors as $author)
+                        <option value="{{ $author->id }}">{{ $author->last_name}}, {{ $author->first_name }}</option>
+                        <!-- Use $author->author to get the value -->
+                    @endforeach
+                </select>
+                @error('author')
+                    <span class="text-xs text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+            <div>
                 <label for="release_date" class="block text-xs font-medium text-gray-700"> Year </label>
                 <input type="text" id="release_date" placeholder="1956" name="release_date"
                     class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
@@ -70,10 +84,12 @@
             </div>
             <div>
                 <label for="type" class="block text-xs font-medium text-gray-700">Type</label>
-                <select id="type" name="type" class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm">
+                <select id="type" name="type"
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm">
                     <option value="" disabled selected>Select type</option>
                     @foreach ($types as $type)
-                        <option value="{{ $type->type }}">{{ $type->type }}</option> <!-- Use $type->type to get the value -->
+                        <option value="{{ $type->type }}">{{ $type->type }}</option>
+                        <!-- Use $type->type to get the value -->
                     @endforeach
                 </select>
                 @error('type')
