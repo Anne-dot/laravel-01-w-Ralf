@@ -29,6 +29,48 @@
                     <span class="text-xs text-red-500">{{ $message }}</span>
                 @enderror
             </div>
+            <div>
+                <label for="language" class="block text-xs font-medium text-gray-700"> Language </label>
+                <input type="text" id="language" value="{{ $book->language}}" name="language"
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                @error('language')
+                    <span class="text-xs text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+            <div>
+                <label for="price" class="block text-xs font-medium text-gray-700"> Price </label>
+                <input type="text" id="price" value="{{ number_format($book->price,2) }}€" name="price"
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                @error('price')
+                    <span class="text-xs text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+            <div>
+                <label for="pages" class="block text-xs font-medium text-gray-700"> Pages </label>
+                <input type="text" id="pages" value="{{ $book->pages }}" name="pages"
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                @error('pages')
+                    <span class="text-xs text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+            <div>
+                <label for="type" class="block text-xs font-medium text-gray-700"> type </label>
+                <input type="text" id="type" value="{{ $book->type }}" name="type"
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                @error('type')
+                    <span class="text-xs text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+            <div>
+                <label for="summary" class="block text-xs font-medium text-gray-700"> Summary </label>
+                <textarea  id="summary" name="summary" rows="4"
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" >{{ $book->summary}}</textarea>
+                @error('summary')
+                    <span class="text-xs text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+            <br>
+            <p>{{$book}}</p>
             
             <button class="bg-slate-800 px-3 py-2 text-sm text-white rounded-md hover:bg-slate-700" type="submit">
                 Update book records </button>

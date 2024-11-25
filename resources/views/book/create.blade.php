@@ -7,19 +7,24 @@
             <div>
                 <label for="title" class="block text-xs font-medium text-gray-700"> Title </label>
                 <input type="text" id="title" placeholder="Kõrboja peremees" name="title"
-                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                    value="{{ old('title') }}" class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
                 @error('title')
                     <span class="text-xs text-red-500">{{ $message }}</span>
                 @enderror
             </div>
             <div>
-                <label for="author" class="block text-xs font-medium text-gray-700">Author</label>
+                <label for="author" class="block text-xs font-medium text-gray-700 text-red-500">Author</label>
                 <select id="author" name="author"
                     class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm">
-                    <option value="" disabled selected>Select author</option>
+                    <option value="" disabled>Select author</option>
                     @foreach ($authors as $author)
-                        <option value="{{ $author->id }}">{{ $author->last_name}}, {{ $author->first_name }}</option>
-                        <!-- Use $author->author to get the value -->
+                        <option value="{{ $author->id }}">
+                            @if (old('author') == $author->id)
+                                selected
+                            @endif
+                            {{ $author->last_name }}, {{ $author->first_name }}
+
+                        </option>
                     @endforeach
                 </select>
                 @error('author')
@@ -29,6 +34,7 @@
             <div>
                 <label for="release_date" class="block text-xs font-medium text-gray-700"> Year </label>
                 <input type="text" id="release_date" placeholder="1956" name="release_date"
+                    value="{{ old('release_date') }}"
                     class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
                 @error('release_date')
                     <span class="text-xs text-red-500">{{ $message }}</span>
@@ -37,6 +43,7 @@
             <div>
                 <label for="cover_path" class="block text-xs font-medium text-gray-700"> Cover Path </label>
                 <input type="text" id="cover_path" placeholder="www.korbojaperemees.ee" name="cover_path"
+                    value=""{{ old('cover_path') }}
                     class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
                 @error('cover_path')
                     <span class="text-xs text-red-500">{{ $message }}</span>
@@ -44,8 +51,18 @@
             </div>
             <div>
                 <label for="language" class="block text-xs font-medium text-gray-700"> Language </label>
-                <input type="text" id="language" placeholder="Estonian" name="language"
-                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
+                <select id="language" placeholder="Estonian" name="language"
+                    class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm">
+                    <option value="" disabled>Select language</option>
+                    @foreach ($languageSelection as $language)
+                        <option value="{{ $language->language }}">
+                            @if (old('language') == $language->language)
+                                selected
+                            @endif
+                            {{ $language->language }}
+                        </option>
+                    @endforeach
+                </select>
                 @error('language')
                     <span class="text-xs text-red-500">{{ $message }}</span>
                 @enderror
@@ -60,7 +77,7 @@
             </div>
             <div>
                 <label for="price" class="block text-xs font-medium text-gray-700"> Price </label>
-                <input type="text" id="price" placeholder="19,99" name="price"
+                <input type="text" id="price" placeholder="19,99" name="price" value="{{ old('price') }}"
                     class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
                 @error('price')
                     <span class="text-xs text-red-500">{{ $message }}</span>
@@ -69,6 +86,7 @@
             <div>
                 <label for="stock_saldo" class="block text-xs font-medium text-gray-700"> Stock Saldo </label>
                 <input type="text" id="stock_saldo" placeholder="16" name="stock_saldo"
+                    value="{{ old('stock_saldo') }}"
                     class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
                 @error('stock_saldo')
                     <span class="text-xs text-red-500">{{ $message }}</span>
@@ -76,7 +94,7 @@
             </div>
             <div>
                 <label for="pages" class="block text-xs font-medium text-gray-700"> Pages </label>
-                <input type="text" id="pages" placeholder="165" name="pages"
+                <input type="text" id="pages" placeholder="165" name="pages" value="{{ old('pages') }}"
                     class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm" />
                 @error('pages')
                     <span class="text-xs text-red-500">{{ $message }}</span>
@@ -86,7 +104,7 @@
                 <label for="type" class="block text-xs font-medium text-gray-700">Type</label>
                 <select id="type" name="type"
                     class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm">
-                    <option value="" disabled selected>Select type</option>
+                    <option value="" disabled>Select type</option>
                     @foreach ($types as $type)
                         <option value="{{ $type->type }}">{{ $type->type }}</option>
                         <!-- Use $type->type to get the value -->

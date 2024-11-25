@@ -6,55 +6,73 @@ use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
+use function Laravel\Prompts\select;
+
 class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
 
-     public function index()
+    public function index()
     {
         return view('book.index', [
-            'books' => Book::paginate(5)
+            'books' => Book::paginate(8),
+            'authors' => Author::all()
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
- 
+
     public function create()
     {
+        // Fetch languages from the Book model
+        $languageSelection = Book::select('language')->distinct()->orderBy('language')->get();
+
         // Fetch distinct types from the Book model
-        $types = Book::select('type')->distinct()->get(); 
+        // Using eloquent
+        // $types = Book::pluck('type')->unique();
+        // Using a query builder
+        $types = Book::select('type')->distinct()->get();
+
+
 
         // $authors = Author::all();
+        // Eloquent 
+        // $authors = Author::all(['id', 'last_name', 'first_name'])->sortBy(['last_name', 'first_name']);
+        // Query builder
         $authors = Author::orderBy('last_name')->orderBy('first_name')->get();
 
         // Return the 'book.create' view and pass the $types and $authors variables to it
         return view('book.create', [
-            'types' => $types, 
-            'authors' => $authors
+            'types' => $types,
+            'authors' => $authors,
+            'languageSelection' => $languageSelection
         ]);
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        Book::create($request->validate([
+        $validatedData = $request->validate([
             'title' => 'required',
             'release_date' => 'required',
             'language' => 'required',
-            'price' => 'required',
+            'price' => 'required|numeric',
             'stock_saldo' => 'required',
             'pages' => 'required',
             'type' => 'required',
-        ]));
+            'author' => 'required',
+        ]);
 
-        return redirect()->route('books.index')->with('message', 'Book added.');
+        Book::create($validatedData);
+
+        return redirect()->route('books.index')->with('message', 'Book :title added.');
     }
 
     /**
@@ -86,11 +104,15 @@ class BookController extends Controller
         $book->update($request->validate([
             'title' => 'required',
             'release_date' => 'required',
-            'cover_path' => 'required'
+            'cover_path' => 'required',
+            'language' => 'required',
+            'price' => 'required',
+            'pages' => 'required',
+            'type' => 'required',
+
         ]));
 
-        return redirect()->route('books.index')->with('message', __(':title updated!', ['title' =>$book->title]));
-
+        return redirect()->route('books.index')->with('message', __(':title updated!', ['title' => $book->title]));
     }
 
     /**

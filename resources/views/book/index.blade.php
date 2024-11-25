@@ -15,6 +15,7 @@
         <thead class="text-left">
             <tr>
                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Title</th>
+                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Author</th>
                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Year</th>
                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Language</th>
                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Price</th>
@@ -27,7 +28,10 @@
             @foreach ($books as $book)
                 <tr>
                     <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                        {{ $book->title }}
+                        <a href="{{ route('books.show', $book->id)}}">{{ $book->title }}</a>
+                    </td>
+                    <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-red-500">
+                        {{-- {{ $author->last_name }} --}} [To do]
                     </td>
                     <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                         {{ $book->release_date }}
@@ -36,7 +40,7 @@
                         {{ $book->language}}
                     </td>
                     <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                        {{ $book->price }}
+                        {{ number_format($book->price,2) }}
                     </td>
                     <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                         {{ $book->stock_saldo }}
