@@ -16,9 +16,10 @@ class BookController extends Controller
 
     public function index()
     {
+        $books = Book::orderBy('title')->with('authors')->paginate(10);
+
         return view('book.index', [
-            'books' => Book::paginate(8),
-            'authors' => Author::all()
+            'books' => $books
         ]);
     }
 
@@ -80,6 +81,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
+        $authors = $book->load('authors');
+
         return view('book.show', [
             'book' => $book
         ]);
@@ -90,8 +93,15 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
+        $book->load('authors');
+
+        $types = Book::select('type')->distinct()->get();
+        $allAuthors = Author::all();
+
         return view('book.edit', [
             'book' => $book,
+            'types' => $types,
+            'allAuthors' => $allAuthors
         ]);
     }
 

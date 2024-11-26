@@ -8,7 +8,13 @@
     </x-slot:actions>
 
     <div>
-        <p>Auhor(s): <span class="text-red-600">[I want to learn how i can make this show authors]</span></p>
+        <p>Author(s):
+            @foreach($book->authors as $author)
+            <ul class="pl-4">
+                <li>{{$author->first_name}} {{$author->last_name}}</li>
+            </ul>
+            @endforeach
+        </p>
         <p>Release Date: {{ $book->release_date }} </p>
         <p><a href="{{ $book->cover_path }}">Link to Cover Path</a></p>
         <p>Language: {{ $book->language }}</p>
